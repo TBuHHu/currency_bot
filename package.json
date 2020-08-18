@@ -1,0 +1,19 @@
+{
+  "name": "tbh_bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "node-cron": "^2.0.3",
+    "node-telegram-bot-api": "0.50.0",
+    "request": "^2.88.2",
+    "telegraf": "^3.38.0"
+  }
+}
