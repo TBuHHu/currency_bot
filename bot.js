@@ -39,5 +39,5 @@ cron.schedule(' 00 12 * * *', () => {
   }
 });
 
-console.log('Bot started');
 bot.launch();
+console.log('Bot has been started...');
