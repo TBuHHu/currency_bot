@@ -8,10 +8,15 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 const uri = process.env.MONGO_DB;
 const client = new MongoClient(uri);
 
-client.connect();
-
+let collection;
+let database;
 let usdValue;
 let eurValue;
+
+client.connect(() => {
+  database = client.db('tbh_currency_bot');
+  collection = database.collection('users');
+});
 
 request('https://www.cbr-xml-daily.ru/daily_json.js', (error, response, body) => {
   const data = JSON.parse(body);
@@ -21,8 +26,6 @@ request('https://www.cbr-xml-daily.ru/daily_json.js', (error, response, body) =>
 
 async function newUser(ctx) {
   try {
-    const database = client.db('tbh_currency_bot');
-    const collection = database.collection('users');
     const query = { id: ctx.chat.id };
     console.log(query);
     const newUserId = await collection.findOne(query);
@@ -50,10 +53,8 @@ bot.command('now', (ctx) =>
 );
 
 cron.schedule(
-  '00 12 * * *',
+  '00 12 * * Monday,Tuesday,Wednesday,Thursday,Friday',
   () => {
-    const database = client.db('tbh_currency_bot');
-    const collection = database.collection('users');
     collection.find().toArray((err, result) => {
       if (err) throw err;
       for (let i = 0; i < result.length; i++) {
